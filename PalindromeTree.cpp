@@ -7,54 +7,53 @@ struct node {
   int sufflink;
   int num;
 };
-int len;
 string s;
 node tree[MAXN]; 
-int num;  // node 1 - root with len -1, node 2 - root with len 0
-int suff; // max suffix palindrome
+int num;  // total number of nodes already have, node 1 has root with len -1, node 2 has root with len 0
+int suff; // index of the longest suffix palindrome from the previous prefix
 long long ans;
-bool addLetter(int pos) {
-  int cur = suff, curlen = 0;
-  int let = s[pos] - 'a';
-  while (true) {
-    curlen = tree[cur].len;
-    if (pos - 1 - curlen >= 0 && s[pos - 1 - curlen] == s[pos]) break;  
-    cur = tree[cur].sufflink;
-  }       
-  if (tree[cur].next[let]) {  
-    suff = tree[cur].next[let];
-    return false;
-  }
-  num++;
-  suff = num;
-  tree[num].len = tree[cur].len + 2;
-  tree[cur].next[let] = num;
-  if (tree[num].len == 1) {
-    tree[num].sufflink = 2;
-    tree[num].num = 1;
-    return true;
-  }
-  while (true) {
-    cur = tree[cur].sufflink;
-    curlen = tree[cur].len;
-    if (pos - 1 - curlen >= 0 && s[pos - 1 - curlen] == s[pos]) {
-      tree[num].sufflink = tree[cur].next[let];
-      break;
-    }       
-  }           
-  tree[num].num = 1 + tree[tree[num].sufflink].num;
-  return true;
-}
 void initTree() {
   num = 2; suff = 2;
   tree[1].len = -1; tree[1].sufflink = 1;
   tree[2].len = 0; tree[2].sufflink = 1;
 }
+void addLetter(int pos) {
+  int cur = suff, curlen;
+  int cc = s[pos] - 'a';
+  while (true) {
+    curlen = tree[cur].len;
+    if (pos - 1 - curlen >= 0 && s[pos - 1 - curlen] == s[pos]) break;
+    cur = tree[cur].sufflink;
+  }
+  if (tree[cur].next[cc]) {
+    suff = tree[cur].next[cc];
+    return;
+  }
+  suff = ++num;
+  tree[num].len = tree[cur].len + 2;
+  tree[cur].next[cc] = num;
+  if (tree[num].len == 1) {
+    tree[num].sufflink = 2;
+    tree[num].num = 1;
+    return;
+  }
+  while (true) {
+    cur = tree[cur].sufflink;
+    curlen = tree[cur].len;
+    if (pos - 1 - curlen >= 0 && s[pos - 1 - curlen] == s[pos]) {
+      tree[num].sufflink = tree[cur].next[cc];
+      break;
+    }
+  }
+  tree[num].num = tree[tree[num].sufflink].num + 1;
+}
 int main() {
-  cin >> s;
-  len = s.size();
+  int n;
+  //cin >> s;
+  s = "eertree";
+  n = s.size();
   initTree();
-  for (int i = 0; i < len; i++) {
+  for (int i = 0; i < n; i++) {
     addLetter(i);
     ans += tree[suff].num;
   }
