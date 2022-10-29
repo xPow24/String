@@ -56,6 +56,13 @@ int main() {
   for (int i = 0; i < n; i++) {
     addLetter(i);
     ans += tree[suff].num;
+    int cur = suff;
+    while (cur != 2) {
+      int len = tree[cur].len;
+      cout << s.substr(i - len + 1, len) << ' ';
+      cur = tree[cur].sufflink;
+    }
+    cout << '\n';   
   }
   cout << ans << endl;
   return 0;
