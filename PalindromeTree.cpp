@@ -8,7 +8,7 @@ struct node {
   int num;
 };
 int len;
-char s[MAXN];
+string s;
 node tree[MAXN]; 
 int num;  // node 1 - root with len -1, node 2 - root with len 0
 int suff; // max suffix palindrome
@@ -51,8 +51,8 @@ void initTree() {
   tree[2].len = 0; tree[2].sufflink = 1;
 }
 int main() {
-  gets(s);
-  len = strlen(s);
+  cin >> s;
+  len = s.size();
   initTree();
   for (int i = 0; i < len; i++) {
     addLetter(i);
