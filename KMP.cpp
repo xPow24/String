@@ -9,8 +9,8 @@ void buildKMP(string pattern) {
     int j = PS[i - 1];
     while (true) {
       if (pattern[j] == pattern[i - 1]) {
-  	 PS[i] = j + 1; 
-  	 break;
+  	PS[i] = j + 1; 
+  	break;
       }
       else if (j == 0) {
       	PS[i] = 0;
