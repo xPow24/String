@@ -4,7 +4,7 @@ const int MAXN = 5*1e5;
 int trie[MAXN][26], finish[MAXN], node;
 void buildTrie(string s) {
   int cur = 0, n = s.size();
-  for (int i = n - 1; i >= 0; --i) {
+  for (int i = 0; i < n; ++i) {
     int tt = s[i] - 'a';
     if (trie[cur][tt] == 0) trie[cur][tt] = ++node;
     cur = trie[cur][tt];
