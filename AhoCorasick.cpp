@@ -23,6 +23,7 @@ int main() {
   int n, node = 2;
   cin >> n;
   memset(endp, -1, sizeof(endp));
+  endp[1] = 0;
   for (int i = 0; i < n; ++i) {
     int p = 1;
     string s;
