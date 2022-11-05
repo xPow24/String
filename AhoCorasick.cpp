@@ -11,7 +11,7 @@ void buildAho() {
     q.pop();
     dic[v] = endp[link[v]] >= 0 ? link[v] : dic[link[v]];
     for (int i = 0; i < 26; ++i) {
-      if (trie[v][i] == 0) trie[v][i] = trie[link[v]][i];
+      if (trie[v][i] == 0) trie[v][i] = trie[link[v]][i]; //create "fake" node is it's longest suffix contains that letter
       else {
         link[trie[v][i]] = trie[link[v]][i];
         q.push(trie[v][i]);
